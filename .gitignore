@@ -38,3 +38,4 @@ include/*
 
 # YAGo stuff
 settings_local.py
+db/yago.db

@@ -35,3 +35,6 @@ nosetests.xml
 # Django stuff
 .Python
 include/*
+
+# YAGo stuff
+settings_local.py

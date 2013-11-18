@@ -13,7 +13,7 @@ BOARD_LOCATIONS = []
 
 for x in range(19):
     for y in range(19):
-        loc = "%d,%d" % (x, y)
+        loc = "%d,%d" % (x + 1, y + 1)
         BOARD_LOCATIONS.append([loc, loc])
 
 

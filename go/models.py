@@ -24,24 +24,6 @@ def xstr(s):
         return str(s)
 
 
-class Play(models.Model):
-    """
-    A single play in a game as defined by sequence, player and play location.
-    """
-
-    seq = models.PositiveSmallIntegerField()
-    player = models.PositiveSmallIntegerField(choices=PLAYER_CHOICES)
-    loc = models.CharField(choices=BOARD_LOCATIONS, max_length="7")
-
-    def __str__(self):
-        return ' '.join([
-            xstr(self.seq),
-            xstr(self.player),
-        ])
-
-admin.site.register(Play)
-
-
 class Kifu(models.Model):
     """
     Kifu (棋譜) is the Japanese term for a game record for a game of Go or
@@ -54,8 +36,6 @@ class Kifu(models.Model):
     player1 = models.ForeignKey(User, related_name='kifu_player1')
     player2 = models.ForeignKey(User, related_name='kifu_player2')
 
-    plays = models.ForeignKey(Play)
-
     def __str__(self):
         return ' '.join([
             xstr(self.date),
@@ -64,3 +44,25 @@ class Kifu(models.Model):
         ])
 
 admin.site.register(Kifu)
+
+
+class Play(models.Model):
+    """
+    A single play in a game as defined by sequence, player and play location.
+    """
+
+    kifu = models.ForeignKey(Kifu)
+
+    seq = models.PositiveSmallIntegerField()
+    player = models.PositiveSmallIntegerField(choices=PLAYER_CHOICES)
+    loc = models.CharField(choices=BOARD_LOCATIONS, max_length="7")
+
+    def __str__(self):
+        return ' '.join([
+            xstr(self.kifu),
+            xstr(self.seq),
+            xstr(self.player),
+            xstr(self.loc),
+        ])
+
+admin.site.register(Play)

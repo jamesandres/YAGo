@@ -37,11 +37,11 @@ class Kifu(models.Model):
     player2 = models.ForeignKey(User, related_name='kifu_player2')
 
     def __str__(self):
-        return ' '.join([
-            xstr(self.date),
+        return "%s: %s vs. %s" % (
+            self.date.strftime('%d, %B %Y'),
             xstr(self.player1),
-            xstr(self.player2),
-        ])
+            xstr(self.player2)
+        )
 
 admin.site.register(Kifu)
 

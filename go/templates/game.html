@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
+
 {% block content %}
-The GAME!
+
+<h1>{{ kifu }}</h1>
+
+<div class="game-play-area">
+    <div class="go-board">
+        {% for rows in board %}
+        {% for cell in rows %}
+        <div class="cell">{{ cell }}</div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

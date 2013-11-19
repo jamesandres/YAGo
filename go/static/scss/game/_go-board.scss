@@ -1,0 +1,24 @@
+.game-play-area {
+    overflow: hidden;
+    width: 100%;
+
+    .go-board {
+        margin: 0 auto;
+    }
+}
+
+.go-board {
+    float: left;
+    background-image: url("../images/retina_wood/retina_wood.png");
+    border: 1px solid #444;
+
+    .cell {
+        width: 4em;
+        height: 4em;
+        border: 1px solid #444;
+        float: left;
+    }
+    .cell:nth-child(19n + 20) {
+        clear: left;
+    }
+}

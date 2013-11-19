@@ -6,8 +6,12 @@ import go.views
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    url(r'^$', go.views.GameView.as_view(), name='game'),
+urlpatterns = patterns(
+    '',
+
+    url(r'^$', go.views.ListGamesView.as_view(), name='list-games'),
+
+    url(r'^(?P<pk>\d+)$', go.views.GameView.as_view(), name='game'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

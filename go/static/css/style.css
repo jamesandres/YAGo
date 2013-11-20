@@ -21,10 +21,10 @@ html, body {
 }
 .go-board .cell {
   position: relative;
+  float: left;
   width: 4em;
   height: 4em;
   border: 1px solid #444;
-  float: left;
 }
 .go-board .cell .label {
   display: none;
@@ -36,11 +36,11 @@ html, body {
   left: -0.5em;
   width: 1em;
   height: 1em;
-  -webkit-border-radius: 1em;
-  -moz-border-radius: 1em;
-  -ms-border-radius: 1em;
-  -o-border-radius: 1em;
-  border-radius: 1em;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
   background: #444;
 }
 .go-board .cell:nth-child(18n + 19) {
@@ -55,11 +55,30 @@ html, body {
   left: 0.5em;
 }
 .interaction-layer .btn {
+  position: relative;
+  float: left;
   width: 4em;
   height: 4em;
-  float: left;
   background-color: rgba(255, 0, 0, 0);
 }
 .interaction-layer .btn:nth-child(19n + 20) {
   clear: left;
+}
+.interaction-layer .stone {
+  position: absolute;
+  top: 0.375em;
+  left: 0.375em;
+  width: 3.25em;
+  height: 3.25em;
+  -webkit-border-radius: 1.625em;
+  -moz-border-radius: 1.625em;
+  -ms-border-radius: 1.625em;
+  -o-border-radius: 1.625em;
+  border-radius: 1.625em;
+}
+.interaction-layer .stone-black {
+  background-color: #222;
+}
+.interaction-layer .stone-white {
+  background-color: #efefef;
 }

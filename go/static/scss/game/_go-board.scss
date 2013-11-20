@@ -22,10 +22,12 @@
 
     .cell {
         position: relative;
+        float: left;
+
         width: 4em;
         height: 4em;
+
         border: 1px solid #444;
-        float: left;
 
         .label {
             display: none;
@@ -38,7 +40,7 @@
             left: -0.5em;
             width: 1em;
             height: 1em;
-            @include border-radius(1em);
+            @include border-radius(0.5em);
             background: #444;
         }
     }
@@ -55,14 +57,31 @@
     left: 0.5em;
 
     .btn {
+        position: relative;
+        float: left;
+
         width: 4em;
         height: 4em;
-        float: left;
 
         background-color: rgba(255, 0, 0, 0.0);
     }
-
     .btn:nth-child(19n + 20) {
         clear: left;
+    }
+
+    .stone {
+        position: absolute;
+        top: 0.375em;
+        left: 0.375em;
+        width: 3.25em;
+        height: 3.25em;
+
+        @include border-radius(1.625em);
+    }
+    .stone-black {
+        background-color: #222;
+    }
+    .stone-white {
+        background-color: #efefef;
     }
 }

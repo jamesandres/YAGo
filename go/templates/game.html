@@ -53,6 +53,13 @@
                 ].join(''));
             }
         }
+
+        // Yucky rough click handling
+        var color = 'black';
+        $interaction_layer.find('.btn').click(function () {
+            $(this).append('<div class="stone stone-' + color + '"></div>');
+            color = color === 'black' ? 'white' : 'black';
+        });
     });
 </script>
 

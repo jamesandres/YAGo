@@ -4,24 +4,62 @@ html, body {
 }
 
 .game-play-area {
-  overflow: hidden;
+  position: relative;
   width: 100%;
-}
-.game-play-area .go-board {
   margin: 0 auto;
 }
 
 .go-board {
   float: left;
+  position: absolute;
   background-image: url("../images/retina_wood/retina_wood.png");
+  padding: 2.5em;
+}
+.go-board .inner {
+  overflow: hidden;
   border: 1px solid #444;
 }
 .go-board .cell {
+  position: relative;
   width: 4em;
   height: 4em;
   border: 1px solid #444;
   float: left;
 }
-.go-board .cell:nth-child(19n + 20) {
+.go-board .cell .label {
+  display: none;
+}
+.go-board .cell .star {
+  position: absolute;
+  z-index: 1;
+  top: -0.5em;
+  left: -0.5em;
+  width: 1em;
+  height: 1em;
+  -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  -ms-border-radius: 1em;
+  -o-border-radius: 1em;
+  border-radius: 1em;
+  background: #444;
+}
+.go-board .cell:nth-child(18n + 19) {
+  clear: left;
+}
+
+.interaction-layer {
+  float: left;
+  position: absolute;
+  z-index: 1;
+  top: 0.5em;
+  left: 0.5em;
+}
+.interaction-layer .btn {
+  width: 4em;
+  height: 4em;
+  float: left;
+  background-color: rgba(255, 0, 0, 0);
+}
+.interaction-layer .btn:nth-child(19n + 20) {
   clear: left;
 }

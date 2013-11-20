@@ -17,12 +17,12 @@ class GameView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(GameView, self).get_context_data(**kwargs)
 
-        context['board'] = list()
-        for x in range(19):
-            context['board'].insert(x, [])
-            for y in range(19):
-                context['board'][x].insert(y, "%d,%d" % (x + 1, y + 1))
-
-        print context['board']
+        kifu = context['kifu']
+        context['game'] = {
+            'date': kifu.date,
+            'player1': str(kifu.player1),
+            'player2': str(kifu.player2),
+            'board_size': kifu.board_size,
+        }
 
         return context

@@ -36,6 +36,8 @@ class Kifu(models.Model):
     player1 = models.ForeignKey(User, related_name='kifu_player1')
     player2 = models.ForeignKey(User, related_name='kifu_player2')
 
+    board_size = models.PositiveSmallIntegerField(default=19)
+
     def __str__(self):
         return "%s: %s vs. %s" % (
             self.date.strftime('%d, %B %Y'),

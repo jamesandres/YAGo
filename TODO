@@ -1,19 +1,19 @@
 GAME UI:
-    ☐ Game page requires a Kifu ID
-    ☐ A basic board
-    ☐ Intersections can have a stone (or not)
-    ☐ Click handling to place stones
+    ✔ Game page requires a Kifu ID @done (13-11-21 12:57)
+    ✔ A basic board @done (13-11-21 12:57)
+    ✔ Intersections can have a stone (or not) @done (13-11-21 12:57)
+    ✔ Click handling to place stones @done (13-11-21 12:57)
     ☐ Some concept of who is placing the stone, who's turn it is
 
 BACKEND:
     ☐ Get a CRUD API set up, should require credentials, etc.
-        ☐ /GAME-ID/play/X,Y
-            ☐ Fail if invalid GAME ID
+        ✔ /GAME-ID/play   {X,Y} @done (13-11-21 14:29)
+            ✔ Fail if invalid GAME ID @done (13-11-21 14:29)
             ☐ Fail if user not player in  this game
             ☐ Fail if not user's turn to play
             ☐ Fail if X,Y invalid
-            ☐ Else succeed
-        ☐ /GAME-ID/play/pass
+            ✔ Else succeed @done (13-11-21 14:30)
+        ☐ /GAME-ID/play    {pass}
             ☐ Fail if invalid GAME ID
             ☐ Fail if user not player in  this game
             ☐ Fail if not user's turn to play

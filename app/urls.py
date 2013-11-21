@@ -13,6 +13,9 @@ urlpatterns = patterns(
 
     url(r'^(?P<pk>\d+)$', go.views.GameView.as_view(), name='game'),
 
+    url(r'^(?P<kifu_id>\d+)/play$',
+        go.views.APIPlayView.as_view(), name='api-play'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

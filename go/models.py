@@ -38,6 +38,14 @@ class Kifu(models.Model):
 
     board_size = models.PositiveSmallIntegerField(default=19)
 
+    def to_dict(self):
+        return {
+            'date': str(self.date),
+            # 'player1': self.player1,
+            # 'player2': self.player2,
+            'board_size': int(self.board_size),
+        }
+
     def __str__(self):
         return "%s: %s vs. %s" % (
             self.date.strftime('%d, %B %Y'),
@@ -58,6 +66,30 @@ class Play(models.Model):
     seq = models.PositiveSmallIntegerField()
     player = models.PositiveSmallIntegerField(choices=PLAYER_CHOICES)
     loc = models.CharField(choices=BOARD_LOCATIONS, max_length="7")
+
+    def calculate_sequence_and_player(self):
+        # TODO: Handle finished game.
+        if not isinstance(self.kifu, Kifu):
+            return False
+
+        last_play = Play.objects.filter(kifu=self.kifu).latest('seq')
+
+        if not last_play:
+            self.seq = 0
+            self.player = 1
+        else:
+            self.seq = last_play.seq + 1
+            self.player = ((last_play.player + 1) % 2) + 1
+
+        return True
+
+    def to_dict(self):
+        return {
+            'kifu': self.kifu,
+            'seq': int(self.seq),
+            'player': self.player,
+            'loc': self.loc,
+        }
 
     def __str__(self):
         return ' '.join([

@@ -49,7 +49,9 @@
             for (y = 1; y <= game.board_size; y++) {
                 classes = ['btn', 'btn-' + x + '-' + y + '']
                 $interaction_layer.append([
-                    '<div class="', classes.join(' ') ,'"></div>'
+                    '<div class="', classes.join(' ') ,'" ',
+                         'data-x="', x, '" data-y="', y, '">',
+                    '</div>'
                 ].join(''));
             }
         }
@@ -57,8 +59,19 @@
         // Yucky rough click handling
         var color = 'black';
         $interaction_layer.find('.btn').click(function () {
-            $(this).append('<div class="stone stone-' + color + '"></div>');
+            var $btn = $(this);
+
+            $btn.append('<div class="stone stone-' + color + '"></div>');
             color = color === 'black' ? 'white' : 'black';
+
+            $.ajax({
+                method: 'POST',
+                url: '/' + game.id + '/play',
+                data: {
+                    x: $btn.data('x'),
+                    y: $btn.data('y')
+                },
+            });
         });
     });
 </script>

@@ -25,10 +25,12 @@ class GameView(DetailView):
         context['game'] = {
             'id': kifu.id,
             'date': kifu.date,
-            'player1': str(kifu.player1),
-            'player2': str(kifu.player2),
+            'player1': kifu.player1.to_dict(),
+            'player2': kifu.player2.to_dict(),
             'board_size': kifu.board_size,
+            'plays': kifu.plays(),
         }
+        context['player'] = self.request.user.to_dict()
 
         return context
 

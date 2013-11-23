@@ -8,12 +8,14 @@
 <h1>{{ kifu }}</h1>
 
 <script>
-    var game = {{ game | jsonify }}
+    var game = {{ game | jsonify }},
+        player = {{ player | jsonify }};
 
     jQuery(function ($) {
-        var x, y,
+        var i, x, y,
             classes,
             star,
+            play, loc,
             $el = $('<div class="game-play-area"></div>'),
             $board = $('<div class="go-board"></div>'),
             $board_inner = $('<div class="inner"></div>'),
@@ -56,13 +58,21 @@
             }
         }
 
-        // Yucky rough click handling
-        var color = 'black';
-        $interaction_layer.find('.btn').click(function () {
-            var $btn = $(this);
+        // Lay out the previous plays
+        for (i = 0; i < game.plays.length; i++) {
+            play = game.plays[i];
+            loc = play.loc.split(',');
 
-            $btn.append('<div class="stone stone-' + color + '"></div>');
-            color = color === 'black' ? 'white' : 'black';
+            color = (play.player - 1) % 2 === 0 ? 'black' : 'white';
+
+            $('.btn-' + loc[0] + '-' + loc[1])
+                .append('<div class="stone stone-' + color + '"></div>')
+                .addClass('btn-disabled');
+        };
+
+        // Yucky rough click handling
+        $interaction_layer.find('.btn:not(.btn-disabled)').click(function () {
+            var $btn = $(this);
 
             $.ajax({
                 method: 'POST',
@@ -70,6 +80,12 @@
                 data: {
                     x: $btn.data('x'),
                     y: $btn.data('y')
+                },
+                success: function (data) {
+                    color = (data.player - 1) % 2 === 0 ? 'black' : 'white';
+                    $btn
+                        .append('<div class="stone stone-' + color + '"></div>')
+                        .addClass('btn-disabled');
                 },
             });
         });

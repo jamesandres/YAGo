@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
 
+import types
+
 
 PLAYER_CHOICES = (
     (1, 'Player 1'),
@@ -38,11 +40,23 @@ class Kifu(models.Model):
 
     board_size = models.PositiveSmallIntegerField(default=19)
 
+    def plays(self):
+        plays = []
+
+        data = Play.objects.filter(kifu=self).order_by('seq')
+        for datum in data:
+            plays.append({
+                'player': datum.player,
+                'loc': datum.loc,
+            })
+
+        return plays
+
     def to_dict(self):
         return {
             'date': str(self.date),
-            # 'player1': self.player1,
-            # 'player2': self.player2,
+            'player1': self.player1,
+            'player2': self.player2,
             'board_size': int(self.board_size),
         }
 
@@ -72,7 +86,10 @@ class Play(models.Model):
         if not isinstance(self.kifu, Kifu):
             return False
 
-        last_play = Play.objects.filter(kifu=self.kifu).latest('seq')
+        try:
+            last_play = Play.objects.filter(kifu=self.kifu).latest('seq')
+        except Play.DoesNotExist:
+            last_play = None
 
         if not last_play:
             self.seq = 0
@@ -85,7 +102,8 @@ class Play(models.Model):
 
     def to_dict(self):
         return {
-            'kifu': self.kifu,
+            'id': self.id,
+            # 'kifu': self.kifu,
             'seq': int(self.seq),
             'player': self.player,
             'loc': self.loc,
@@ -100,3 +118,12 @@ class Play(models.Model):
         ])
 
 admin.site.register(Play)
+
+
+def User_to_dict(self):
+    return {
+        'id': self.id,
+        'username': self.username,
+    }
+
+User.to_dict = User_to_dict

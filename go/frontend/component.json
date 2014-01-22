@@ -1,0 +1,13 @@
+{
+  "name": "YAGo",
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery": "1.10.x",
+    "bootstrap": "3.x",
+    "modernizr": "2.x",
+    "angular": "1.2.x",
+    "angular-cookies": "1.2.x",
+    "angular-resource": "1.2.x",
+    "angular-route": "1.2.x"
+  }
+}

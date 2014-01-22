@@ -43,3 +43,7 @@ include/*
 settings_local.py
 db/yago.db
 .sass-cache
+
+# Frontend stuff
+node_modules
+go/static/libs

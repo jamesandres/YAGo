@@ -1,0 +1,6 @@
+Git it rollin':
+ ☐ Get the gruntfile build working
+ ☐ Get the coffeescript app compiling
+ ✔ Fix broken CSS / JS paths since everything was moved into libs @done (14-01-19 14:24)
+ ☐ Get karma build working
+ ✔ Move the app and configs itself out of the static dir? Only the build should live in there. @done (14-01-19 14:24)

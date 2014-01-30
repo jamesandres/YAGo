@@ -3,8 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
 
-import types
-
 
 PLAYER_CHOICES = (
     (1, 'Player 1'),
@@ -26,7 +24,7 @@ def xstr(s):
         return str(s)
 
 
-class Kifu(models.Model):
+class Game(models.Model):
     """
     Kifu (棋譜) is the Japanese term for a game record for a game of Go or
     shogi. Kifu is traditionally used to record games on a grid diagram,
@@ -35,15 +33,15 @@ class Kifu(models.Model):
 
     date = models.DateTimeField()
 
-    player1 = models.ForeignKey(User, related_name='kifu_player1')
-    player2 = models.ForeignKey(User, related_name='kifu_player2')
+    player1 = models.ForeignKey(User, related_name='game_player1')
+    player2 = models.ForeignKey(User, related_name='game_player2')
 
     board_size = models.PositiveSmallIntegerField(default=19)
 
     def plays(self):
         plays = []
 
-        data = Play.objects.filter(kifu=self).order_by('seq')
+        data = Play.objects.filter(game=self).order_by('seq')
         for datum in data:
             plays.append({
                 'player': datum.player,
@@ -67,7 +65,7 @@ class Kifu(models.Model):
             xstr(self.player2)
         )
 
-admin.site.register(Kifu)
+admin.site.register(Game)
 
 
 class Play(models.Model):
@@ -75,7 +73,7 @@ class Play(models.Model):
     A single play in a game as defined by sequence, player and play location.
     """
 
-    kifu = models.ForeignKey(Kifu)
+    game = models.ForeignKey(Game)
 
     seq = models.PositiveSmallIntegerField()
     player = models.PositiveSmallIntegerField(choices=PLAYER_CHOICES)
@@ -83,11 +81,11 @@ class Play(models.Model):
 
     def calculate_sequence_and_player(self):
         # TODO: Handle finished game.
-        if not isinstance(self.kifu, Kifu):
+        if not isinstance(self.game, Game):
             return False
 
         try:
-            last_play = Play.objects.filter(kifu=self.kifu).latest('seq')
+            last_play = Play.objects.filter(game=self.game).latest('seq')
         except Play.DoesNotExist:
             last_play = None
 
@@ -103,7 +101,7 @@ class Play(models.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            # 'kifu': self.kifu,
+            # 'game': self.game,
             'seq': int(self.seq),
             'player': self.player,
             'loc': self.loc,
@@ -111,7 +109,7 @@ class Play(models.Model):
 
     def __str__(self):
         return ' '.join([
-            xstr(self.kifu),
+            xstr(self.game),
             xstr(self.seq),
             xstr(self.player),
             xstr(self.loc),

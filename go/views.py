@@ -3,32 +3,32 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.utils import simplejson
 
-from go.models import Kifu, Play
+from go.models import Game, Play
 from go.utils.json_serializer import model_to_json
 
 
 class ListGamesView(ListView):
 
     template_name = 'list-games.html'
-    model = Kifu
+    model = Game
 
 
 class GameView(DetailView):
 
     template_name = 'game.html'
-    model = Kifu
+    model = Game
 
     def get_context_data(self, **kwargs):
         context = super(GameView, self).get_context_data(**kwargs)
 
-        kifu = context['kifu']
-        context['game'] = {
-            'id': kifu.id,
-            'date': kifu.date,
-            'player1': kifu.player1.to_dict(),
-            'player2': kifu.player2.to_dict(),
-            'board_size': kifu.board_size,
-            'plays': kifu.plays(),
+        game = context['game']
+        context['game_data'] = {
+            'id': game.id,
+            'date': game.date,
+            'player1': game.player1.to_dict(),
+            'player2': game.player2.to_dict(),
+            'board_size': game.board_size,
+            'plays': game.plays(),
         }
         context['player'] = self.request.user.to_dict()
 
@@ -46,14 +46,14 @@ class APIPlayView(View):
             simplejson.dumps(errors), mimetype='application/json')
 
     def post(self, request, *args, **kwargs):
-        kifu_id = kwargs.get('kifu_id', '')
-        kifu = Kifu.objects.filter(pk=kifu_id)
+        game_id = kwargs.get('game_id', '')
+        game = Game.objects.filter(pk=game_id)
 
-        if not kifu:
-            return self._error("Cannot make play in game '%s'" % kifu_id)
+        if not game:
+            return self._error("Cannot make play in game '%s'" % game_id)
 
         play = Play(
-            kifu=kifu[0],
+            game=game[0],
             loc=request.POST.get('x', '') + ',' + request.POST.get('y', ''))
 
         play.calculate_sequence_and_player()
@@ -64,7 +64,7 @@ class APIPlayView(View):
             play.full_clean()
         except ValidationError:
             return self._error(
-                "You cannot make move '%s' in game '%s'" % (play.loc, play.kifu))
+                "You cannot make move '%s' in game '%s'" % (play.loc, play.game))
 
         play.save()
         return HttpResponse(

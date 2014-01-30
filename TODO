@@ -1,5 +1,5 @@
 GAME UI:
-    ✔ Game page requires a Kifu ID @done (13-11-21 12:57)
+    ✔ Game page requires a Game ID @done (13-11-21 12:57)
     ✔ A basic board @done (13-11-21 12:57)
     ✔ Intersections can have a stone (or not) @done (13-11-21 12:57)
     ✔ Click handling to place stones @done (13-11-21 12:57)

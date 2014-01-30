@@ -5,10 +5,10 @@
 
 {% block content %}
 
-<h1>{{ kifu }}</h1>
+<h1>{{ game }}</h1>
 
 <script>
-    var game = {{ game | jsonify }},
+    var game = {{ game_data | jsonify }},
         player = {{ player | jsonify }};
 
     jQuery(function ($) {

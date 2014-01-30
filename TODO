@@ -3,6 +3,8 @@ GAME UI:
     ✔ A basic board @done (13-11-21 12:57)
     ✔ Intersections can have a stone (or not) @done (13-11-21 12:57)
     ✔ Click handling to place stones @done (13-11-21 12:57)
+    ☐ Get everything running on a rough AngularJS framework
+    ☐ Migrate the board building into the GameCtrl
     ☐ Some concept of who is placing the stone, who's turn it is
 
 BACKEND:

@@ -47,3 +47,4 @@ db/yago.db
 # Frontend stuff
 node_modules
 go/static/libs
+go/static/app

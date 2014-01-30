@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ngmin');
 
@@ -52,12 +53,26 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            src: {
-                files: '<config:jshint.all>',
-                tasks: ['jshint', 'concat', 'uglify']
-                // options: {
-                //   nospawn: true,
-                // }
+            scripts: {
+                files: ['**/*.coffee'],
+                tasks: ['coffee', 'jshint', 'concat', 'uglify'],
+                options: {
+                  spawn: false,
+                }
+            },
+            styles: {
+                files: ['**/*.scss'],
+                tasks: ['compass'],
+                options: {
+                  spawn: false,
+                }
+            }
+        },
+        compass: {
+            dist: {
+                options: {
+                    config: 'config.rb'
+                }
             }
         },
         karma: {
@@ -78,9 +93,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Default task(s).
-    grunt.registerTask('default', ['coffee', 'jshint']);
+    grunt.registerTask('default', ['compass', 'coffee', 'jshint']);
     grunt.registerTask('scripts', ['coffee']);
-    grunt.registerTask('build', ['coffee', 'jshint', 'concat', 'uglify']);
+    grunt.registerTask('styles', ['compass']);
+    grunt.registerTask('build', ['compass', 'coffee', 'jshint', 'concat', 'uglify']);
     grunt.registerTask('test', ['coffee', 'jshint', 'karma']);
 
 };

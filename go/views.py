@@ -46,7 +46,7 @@ class APIPlayView(View):
             simplejson.dumps(errors), mimetype='application/json')
 
     def post(self, request, *args, **kwargs):
-        game_id = kwargs.get('game_id', '')
+        game_id = kwargs.get('pk', '')
         game = Game.objects.filter(pk=game_id)
 
         if not game:

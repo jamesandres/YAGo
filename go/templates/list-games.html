@@ -6,7 +6,7 @@
 
 <ul>
   {% for game in object_list %}
-    <a href="{% url "game" game_id=game.id %}">{{ game }}</a>
+    <a href="{% url "game" pk=game.id %}">{{ game }}</a>
   {% endfor %}
 </ul>
 

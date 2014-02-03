@@ -11,9 +11,9 @@ urlpatterns = patterns(
 
     url(r'^$', go.views.ListGamesView.as_view(), name='list-games'),
 
-    url(r'^(?P<pk>\d+)$', go.views.GameView.as_view(), name='game'),
+    url(r'^g/(?P<pk>\d+)$', go.views.GameView.as_view(), name='game'),
 
-    url(r'^(?P<game_id>\d+)/play$',
+    url(r'^g/(?P<pk>\d+)/play$',
         go.views.APIPlayView.as_view(), name='api-play'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -1,5 +1,7 @@
 app.page.controller "PageCtrl", ["$scope", "PageState", ($scope, PageState) ->
-  $scope.PageState = PageState
+    console.log "PAGE CONTROLLER"
 
-  return @
+    $scope.PageState = PageState
+
+    return @
 ]

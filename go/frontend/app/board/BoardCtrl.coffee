@@ -1,5 +1,6 @@
 app.board.controller "BoardCtrl", ["$scope", ($scope) ->
-  return @
+    console.log "BoardCtrl loaded"
+    return @
 ]
 
 # // jQuery(function ($) {

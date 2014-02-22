@@ -101,6 +101,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'go.middleware.RequireLoginMiddleware',
 )
 
 ROOT_URLCONF = 'app.urls'
@@ -162,6 +163,11 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REQUIRED_URLS_EXCEPTIONS = (
+    r'/robots.txt',
+    r'/accounts/login/',
+)
 
 try:
     from settings_local import *

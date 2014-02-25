@@ -1,0 +1,22 @@
+<div ng-controller="BoardCtrl" class="game-play-area">
+    <div class="go-board">
+        <div class="inner">
+
+            <div ng-repeat="cell in cells" ng-class="['cell', cell.class]">
+                <div ng-show="cell.has_star" class="star"></div>
+                <span class="label">{{ cell.label }}</span>
+            </div>
+
+        </div>
+    </div>
+    <div class="interaction-layer">
+        <div ng-repeat="btn in buttons" ng-class="['btn', btn.class]" ng-class="{ 'btn-disabled': btn.stone_class }" ng-click="btn_click(btn)">
+            <div ng-show="btn.stone_class" ng-class="['stone', btn.stone_class]"></div>
+        </div>
+    </div>
+</div>
+
+
+        # $('.btn-' + loc[0] + '-' + loc[1])
+        #     .append('<div class="stone stone-' + color + '"></div>')
+        #     .addClass('btn-disabled');

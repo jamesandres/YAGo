@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    // grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-coffee');
@@ -22,15 +22,15 @@ module.exports = function(grunt) {
                 ext: '.js'
             }
         },
-        jshint: {
-            all: ['Gruntfile.js', 'app/**/*.js', '../static/app/**/*.js'],
-            options: {
-                eqeqeq: true,
-                globals: {
-                    angular: true
-                }
-            }
-        },
+        // jshint: {
+        //     all: ['Gruntfile.js', 'app/**/*.js', '../static/app/**/*.js'],
+        //     options: {
+        //         eqeqeq: true,
+        //         globals: {
+        //             angular: true
+        //         }
+        //     }
+        // },
         concat: {
             options: {
                 banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %>\n' + '<%= pkg.homepage ? " *  " + pkg.homepage + "\\n" : "" %>' + ' *  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %> | Licensed <%= pkg.license %>\n' + ' */\n'
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: ['app/**/*.coffee'],
-                tasks: ['coffee', 'jshint', 'concat', 'uglify'],
+                tasks: ['coffee'/*, 'jshint'*/, 'concat', 'uglify'],
                 options: {
                   spawn: false,
                 }
@@ -112,11 +112,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Default task(s).
-    grunt.registerTask('default', ['compass', 'coffee', 'jshint']);
+    grunt.registerTask('default', ['compass', 'coffee'/*, 'jshint'*/]);
     grunt.registerTask('scripts', ['coffee']);
     grunt.registerTask('styles', ['compass']);
     grunt.registerTask('templates', ['copy']);
-    grunt.registerTask('build', ['compass', 'coffee', 'jshint', 'concat', 'uglify', 'copy']);
-    grunt.registerTask('test', ['coffee', 'jshint', 'karma']);
+    grunt.registerTask('build', ['compass', 'coffee'/*, 'jshint'*/, 'concat', 'uglify', 'copy']);
+    grunt.registerTask('test', ['coffee'/*, 'jshint'*/, 'karma']);
 
 };

@@ -1,3 +1,5 @@
 Django==1.5.5
+django-batch-select==0.2.4
 django-jsonify==0.2.1
+ipython==1.2.1
 wsgiref==0.1.2

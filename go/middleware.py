@@ -2,6 +2,7 @@ import re
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+import json
 
 
 class RequireLoginMiddleware(object):
@@ -40,3 +41,20 @@ class RequireLoginMiddleware(object):
 
         # All other requests are wrapped with the login_required decorator
         return login_required(view_func)(request, *view_args, **view_kwargs)
+
+
+class JSONContenttypeMiddleware(object):
+    """
+    Middleware component that translates requests with a JSON body into a
+    usable dict.
+    """
+    def process_request(self, request):
+        if request.META.get('CONTENT_TYPE', '').startswith('application/json'):
+            body = request.body
+
+            if body.startswith('{') or body.startswith('['):
+                try:
+                    request.POST = json.loads(request.body)
+                except ValueError:
+                    # TODO: Gracefully handle malformed JSON requests.
+                    raise

@@ -1,9 +1,15 @@
-app.board.controller "BoardCtrl", ["$scope", ($scope) ->
+app.board.controller "BoardCtrl", ["$scope", "gameService", ($scope, gameService) ->
     $scope.cells = []
     $scope.buttons = []
 
     $scope.btn_click = (btn) ->
-        console.log "Clicked: ", btn
+        p = gameService.play btn.x, btn.y
+        p.success (data) ->
+            # color = (data.player - 1) % 2 === 0 ? 'black' : 'white';
+            # $btn
+            #     .append('<div class="stone stone-' + color + '"></div>')
+            #     .addClass('btn-disabled');
+            console.log "SUCCESS: ", data
 
     board_iterator = (x_dim, y_dim, fn) ->
         for x in [x_dim[0]..x_dim[1]]

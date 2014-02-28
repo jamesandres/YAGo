@@ -102,6 +102,7 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'go.middleware.RequireLoginMiddleware',
+    'go.middleware.JSONContenttypeMiddleware',
 )
 
 ROOT_URLCONF = 'app.urls'

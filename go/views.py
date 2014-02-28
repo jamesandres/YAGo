@@ -52,9 +52,10 @@ class APIPlayView(View):
         if not game:
             return self._error("Cannot make play in game '%s'" % game_id)
 
-        play = Play(
-            game=game[0],
-            loc=request.POST.get('x', '') + ',' + request.POST.get('y', ''))
+        x = str(request.POST.get('x', ''))
+        y = str(request.POST.get('y', ''))
+
+        play = Play(game=game[0], loc=x + ',' + y)
 
         play.calculate_sequence_and_player()
 

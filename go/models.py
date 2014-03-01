@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
+from django.forms import ValidationError
 
 
 PLAYER_CHOICES = (
@@ -79,11 +80,17 @@ class Play(models.Model):
     player = models.PositiveSmallIntegerField(choices=PLAYER_CHOICES)
     loc = models.CharField(choices=BOARD_LOCATIONS, max_length="7")
 
-    def calculate_sequence_and_player(self):
-        # TODO: Handle finished game.
-        if not isinstance(self.game, Game):
-            return False
+    class Meta:
+        unique_together = (('game', 'seq'),)
 
+    def validate_unique(self, exclude=None):
+        others = Play.objects.filter(
+            game=self.game, loc=self.loc).exclude(pk=self.pk)
+
+        if others.count() > 0:
+            raise ValidationError("There is a stone at this location.")
+
+    def calculate_sequence(self):
         try:
             last_play = Play.objects.filter(game=self.game).latest('seq')
         except Play.DoesNotExist:
@@ -91,12 +98,11 @@ class Play(models.Model):
 
         if not last_play:
             self.seq = 0
-            self.player = 1
         else:
-            self.seq = last_play.seq + 1
-            self.player = ((last_play.player + 1) % 2) + 1
+            if last_play.player == self.player:
+                raise ValidationError("You cannot play twice in a row")
 
-        return True
+            self.seq = last_play.seq + 1
 
     def to_dict(self):
         return {

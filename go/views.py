@@ -38,34 +38,44 @@ class GameView(DetailView):
 class APIPlayView(View):
     http_method_names = ['post']
 
-    def _error(self, message):
-        errors = {
-            'message': message
+    def _error(self, message, status=200):
+        data = {
+            'errors': {
+                'message': message
+            }
         }
         return HttpResponse(
-            simplejson.dumps(errors), mimetype='application/json')
+            simplejson.dumps(data),
+            mimetype='application/json',
+            status=status)
 
     def post(self, request, *args, **kwargs):
         game_id = kwargs.get('pk', '')
-        game = Game.objects.filter(pk=game_id)
 
-        if not game:
-            return self._error("Cannot make play in game '%s'" % game_id)
+        try:
+            game = Game.objects.get(pk=game_id)
+        except Game.DoesNotExist:
+            return self._error("Cannot make play in game '%s'" % game_id, 400)
+
+        if request.user == game.player1:
+            player = 1
+        elif request.user == game.player2:
+            player = 2
+        else:
+            return self._error("Access denied", 403)
 
         x = str(request.POST.get('x', ''))
         y = str(request.POST.get('y', ''))
 
-        play = Play(game=game[0], loc=x + ',' + y)
-
-        play.calculate_sequence_and_player()
-
-        print "play.full_clean(): ", play.full_clean()
+        play = Play(game=game, loc=x + ',' + y, player=player)
 
         try:
+            # NOTE: calculate_sequence will throw a ValidationError if a player
+            #       tries to play out of turn
+            play.calculate_sequence()
             play.full_clean()
-        except ValidationError:
-            return self._error(
-                "You cannot make move '%s' in game '%s'" % (play.loc, play.game))
+        except ValidationError as e:
+            return self._error(". ".join(e.messages), 400)
 
         play.save()
         return HttpResponse(

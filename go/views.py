@@ -2,9 +2,11 @@ from django.views.generic import View, ListView, DetailView
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.utils import simplejson
+from django.conf import settings
 
 from go.models import Game, Play
 from go.utils.json_serializer import model_to_json
+from go.utils.messaging import send_message
 
 
 class ListGamesView(ListView):
@@ -31,6 +33,8 @@ class GameView(DetailView):
             'plays': game.plays(),
         }
         context['player'] = self.request.user.to_dict()
+        context['pusher_key'] = settings.PUSHER_KEY
+        context['pusher_channel_base'] = settings.PUSHER_CHANNEL_BASE
 
         return context
 
@@ -78,6 +82,16 @@ class APIPlayView(View):
             return self._error(". ".join(e.messages), 400)
 
         play.save()
+
+        data = model_to_json(play)
+
+        # Inform other clients of the play
+        send_message(
+            'game.' + str(game.id),
+            'play',
+            data,
+            request.POST.get('socket_id', None))
+
         return HttpResponse(
-            model_to_json(play),
+            data,
             mimetype='application/json')

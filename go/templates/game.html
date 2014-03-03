@@ -9,6 +9,10 @@
 
 <script>
     var config = {
+            "pusher": {
+                "key": {{ pusher_key | jsonify }},
+                "channel_base": {{ pusher_channel_base | jsonify }}
+            },
             "game": {{ game_data | jsonify }},
             "player": {{ player | jsonify }}
         };

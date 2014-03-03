@@ -1,4 +1,6 @@
 Django==1.5.5
 South==0.8.4
 django-jsonify==0.2.1
+ipython==1.2.1
+pusher==0.8
 wsgiref==0.1.2

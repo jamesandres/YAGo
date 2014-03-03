@@ -114,12 +114,11 @@ class Play(models.Model):
         }
 
     def __str__(self):
-        return ' '.join([
-            xstr(self.game),
-            xstr(self.seq),
-            xstr(self.player),
-            xstr(self.loc),
-        ])
+        return "Play #%d in %s at %s by player #%d " % (
+            self.seq,
+            self.game,
+            self.loc,
+            self.player)
 
 admin.site.register(Play)
 

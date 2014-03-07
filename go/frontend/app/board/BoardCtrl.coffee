@@ -11,6 +11,9 @@ app.board.controller "BoardCtrl", ["$scope", "gameService", ($scope, gameService
             #     .addClass('btn-disabled');
             console.log "SUCCESS: ", data
 
+    gameService.bindPusherEvent "play", (data) ->
+        console.log "DATA", data
+
     board_iterator = (x_dim, y_dim, fn) ->
         for x in [x_dim[0]..x_dim[1]]
             for y in [y_dim[0]..y_dim[1]]
@@ -35,10 +38,10 @@ app.board.controller "BoardCtrl", ["$scope", "gameService", ($scope, gameService
     # Build the list of buttons to interact with playable points
     dim = [1, bs]
     board_iterator dim, dim, (x, y, loc) ->
-        play = plays_map[loc]?
+        play = plays_map[loc]
 
-        if play
-            stone_class = if (play.player - 1) % 2 == 0 then 'stone-white' else 'stone-black';
+        if play?
+            stone_class = if (play.player % 2) + 1 == 1 then 'stone-white' else 'stone-black';
         else
             stone_class = false
 

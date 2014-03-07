@@ -90,6 +90,14 @@ class Play(models.Model):
         if others.count() > 0:
             raise ValidationError("There is a stone at this location.")
 
+    def clean(self):
+        is_first = not Play.objects.filter(game=self.game).exists()
+
+        if is_first and self.player != 1:
+            raise ValidationError("Black must play the first move.")
+
+        return self.player
+
     def calculate_sequence(self):
         try:
             last_play = Play.objects.filter(game=self.game).latest('seq')

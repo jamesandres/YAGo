@@ -32,9 +32,13 @@ class GameView(DetailView):
             'board_size': game.board_size,
             'plays': game.plays(),
         }
-        context['player'] = self.request.user.to_dict()
+        context['player'] = 1 if self.request.user == game.player1 else 2
         context['pusher_key'] = settings.PUSHER_KEY
         context['pusher_channel_base'] = settings.PUSHER_CHANNEL_BASE
+
+        # Helpful additions for the template layer
+        context['game_data']['player1']['color'] = 'black'
+        context['game_data']['player2']['color'] = 'white'
 
         return context
 
@@ -89,7 +93,7 @@ class APIPlayView(View):
         send_message(
             'game.' + str(game.id),
             'play',
-            data,
+            simplejson.loads(data),
             request.POST.get('socket_id', None))
 
         return HttpResponse(

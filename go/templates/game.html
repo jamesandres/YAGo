@@ -5,19 +5,21 @@
 
 {% block content %}
 
-<h1>{{ game }}</h1>
+<div ng-controller="GameCtrl">
+    <h1 ng-bind="title"></h1>
 
-<script>
-    var config = {
-            "pusher": {
-                "key": {{ pusher_key | jsonify }},
-                "channel_base": {{ pusher_channel_base | jsonify }}
-            },
-            "game": {{ game_data | jsonify }},
-            "player": {{ player | jsonify }}
-        };
-</script>
+    <script>
+        var config = {
+                "pusher": {
+                    "key": {{ pusher_key | jsonify }},
+                    "channel_base": {{ pusher_channel_base | jsonify }}
+                },
+                "game": {{ game_data | jsonify }},
+                "player": {{ player | jsonify }}
+            };
+    </script>
 
-<yago-board></div>
+    <yago-board></div>
+</div>
 
 {% endblock %}
